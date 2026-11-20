@@ -5,11 +5,12 @@
 
 @section('content')
 {{-- Galerie du portail de la médiation --}}
+@php($carouselPhotos = ['mediation-imag.jpeg', 'image1.jpeg', 'image2.jpeg', 'image3.jpeg'])
 <section class="med-gallery" aria-label="Galerie photos du CNEF Gabon" aria-roledescription="carrousel" tabindex="0">
   <div class="med-gallery-slides" aria-live="off">
-    @foreach (['image1.jpeg', 'image2.jpeg', 'image3.jpeg'] as $photo)
+    @foreach ($carouselPhotos as $photo)
       <div class="med-gallery-slide {{ $loop->first ? 'is-active' : '' }}" role="group" aria-roledescription="diapositive" aria-label="{{ $loop->iteration }} sur {{ $loop->count }}" aria-hidden="{{ $loop->first ? 'false' : 'true' }}">
-        <img src="{{ asset('assets/images/mediation-carousel/'.$photo) }}" alt="Photo de groupe des participants devant un bâtiment — vue {{ $loop->iteration }}" width="1280" height="853" loading="{{ $loop->first ? 'eager' : 'lazy' }}" @if ($loop->first) fetchpriority="high" @endif>
+        <img src="{{ asset('assets/images/mediation-carousel/'.$photo) }}" alt="Photo de groupe des participants devant un bâtiment — vue {{ $loop->iteration }}" width="{{ $loop->first ? 1080 : 1280 }}" height="{{ $loop->first ? 720 : 853 }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}" @if ($loop->first) fetchpriority="high" @endif>
       </div>
     @endforeach
   </div>
@@ -31,7 +32,7 @@
   <button class="med-gallery-arrow med-gallery-next" type="button" aria-label="Photo suivante">›</button>
   <div class="med-gallery-controls">
     <div class="med-gallery-dots" aria-label="Choisir une photo">
-      @for ($i = 0; $i < 3; $i++)
+      @for ($i = 0; $i < count($carouselPhotos); $i++)
         <button class="med-gallery-dot {{ $i === 0 ? 'is-active' : '' }}" type="button" aria-label="Afficher la photo {{ $i + 1 }}" aria-current="{{ $i === 0 ? 'true' : 'false' }}"></button>
       @endfor
     </div>
